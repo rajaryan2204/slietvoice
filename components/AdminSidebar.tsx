@@ -12,6 +12,7 @@ import {
   Building,
   Users,
   ShieldCheck,
+  Sparkles,
 } from "lucide-react";
 
 export function AdminSidebar() {
@@ -25,6 +26,7 @@ export function AdminSidebar() {
     { href: "/admin/polls", label: "Manage Polls", icon: BarChart3 },
     { href: "/admin/departments", label: "Departments", icon: Building },
     { href: "/admin/users", label: "Campus Users", icon: Users },
+    { href: "/about", label: "About Us", icon: Sparkles },
   ];
 
   return (

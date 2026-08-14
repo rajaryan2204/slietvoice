@@ -12,6 +12,7 @@ import {
   User,
   GraduationCap,
   Bell,
+  Sparkles,
 } from "lucide-react";
 
 export function StudentSidebar() {
@@ -25,6 +26,7 @@ export function StudentSidebar() {
     { href: "/student/complaints", label: "My Complaints", icon: FolderOpen },
     { href: "/student/notifications", label: "Notifications", icon: Bell },
     { href: "/student/profile", label: "My Profile", icon: User },
+    { href: "/about", label: "About Us", icon: Sparkles },
   ];
 
   return (
