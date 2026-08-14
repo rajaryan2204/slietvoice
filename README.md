@@ -1,36 +1,92 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CampusVoice
 
-## Getting Started
+CampusVoice is a student voice, campus news, opinion, and grievance management platform designed for colleges. It features role-based access control, anonymous reporting, verified news boards, interactive polls, and a systematic escalation tracking flow.
 
-First, run the development server:
+## Tech Stack
+- **Framework**: Next.js 15+ (App Router)
+- **Language**: TypeScript
+- **Database**: SQLite (via Prisma ORM) for zero-setup local runs
+- **Styling**: Tailwind CSS
+- **Authentication**: Secure custom session JWT using HTTP-only cookies
+- **Charts**: Recharts
+- **Icons**: Lucide React
 
+---
+
+## Features
+
+1. **Student Portal**
+   - File grievances (optionally anonymous) with priority options and evidence attachments.
+   - Live timeline status tracker (`Submitted` → `Under Review` → `Assigned` → `Action Taken` → `Resolved`).
+   - Create suggestion posts and support other students' opinions.
+   - Vote in official campus polls and view live outcomes.
+   
+2. **Moderator Portal**
+   - Review and verify complaints submitted by students.
+   - Assign grievances to the appropriate department.
+   - Publish official campus polls.
+
+3. **Faculty Department Admin**
+   - Manage complaints assigned to their specific department.
+   - Log updates, add responses, and request clarifications.
+   - Trigger manual escalations to the HOD/Director.
+
+4. **Director Admin**
+   - Full overview analytics dashboard containing category and department charts.
+   - Intervene on escalated grievances to take final actions.
+   - Publish verified campus news and announcements.
+
+---
+
+## Setup & Local Installation
+
+### 1. Clone the project and install dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Environment Configuration
+Create a `.env` file in the root directory (based on `.env.example`):
+```env
+DATABASE_URL="file:./dev.db"
+JWT_SECRET="super-secret-campus-voice-key-2026"
+PORT=3000
+NODE_ENV="development"
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Initialize & Seed Database
+Synchronize the Prisma schema and run the seed script:
+```bash
+npx prisma db push
+npx tsx prisma/seed.ts
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4. Running the App
+Start the local development server:
+```bash
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) to view the portal.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Demo Accounts Credentials
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+You can test all user roles using these pre-configured accounts:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Role | Email | Password | Details |
+| :--- | :--- | :--- | :--- |
+| **Student** | `student@college.edu` | `password123` | Can submit complaints, upvote suggestions, vote on polls. |
+| **Moderator** | `moderator@college.edu` | `password123` | Can triage complaints, assign departments, manage polls. |
+| **Faculty Admin** | `faculty@college.edu` | `password123` | Manage CS department complaints, post updates. |
+| **Director Admin** | `director@college.edu` | `password123` | Full overview charts, resolve escalated issues, post news. |
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Production Build & Verification
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Verify types and build a production-optimized package:
+```bash
+npx tsc --noEmit
+npm run build
+```

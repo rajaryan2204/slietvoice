@@ -1,0 +1,183 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id           String          @id @default(uuid())
+  email        String          @unique
+  passwordHash String
+  name         String
+  role         String          // STUDENT, MODERATOR, FACULTY, DIRECTOR
+  departmentId String?
+  createdAt    DateTime        @default(now())
+  
+  // Relations
+  profile      StudentProfile?
+  complaints   Complaint[]     @relation("StudentComplaints")
+  opinions     Opinion[]       @relation("StudentOpinions")
+  news         News[]          @relation("AdminNews")
+  polls        Poll[]          @relation("AdminPolls")
+  updates      ComplaintUpdate[] @relation("UserUpdates")
+  notifications Notification[]
+}
+
+model StudentProfile {
+  id           String     @id @default(uuid())
+  studentId    String     @unique
+  year         Int
+  userId       String     @unique
+  departmentId String
+  
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Department {
+  id        String   @id @default(uuid())
+  name      String   @unique
+}
+
+model Complaint {
+  id           String              @id // Custom ID CV-2026-XXXXX
+  title        String
+  description  String
+  category     String              // Academics, Hostel, Mess, Infrastructure, Examination, Fees, Transport, Faculty, IT/Internet, Safety, Other
+  priority     String              // LOW, MEDIUM, HIGH, URGENT
+  status       String              // SUBMITTED, UNDER_REVIEW, ASSIGNED, ACTION_TAKEN, RESOLVED, ESCALATED
+  isAnonymous  Boolean             @default(false)
+  departmentId String?
+  studentId    String?             // Can be null if anonymous
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+
+  // Relations
+  student      User?               @relation("StudentComplaints", fields: [studentId], references: [id], onDelete: SetNull)
+  updates      ComplaintUpdate[]
+  evidence     ComplaintEvidence[]
+  escalations  Escalation[]
+}
+
+model ComplaintUpdate {
+  id          String   @id @default(uuid())
+  complaintId String
+  authorId    String
+  status      String   // Status update at this point
+  message     String
+  isInternal  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  // Relations
+  complaint   Complaint @relation(fields: [complaintId], references: [id], onDelete: Cascade)
+  author      User      @relation("UserUpdates", fields: [authorId], references: [id], onDelete: Cascade)
+}
+
+model ComplaintEvidence {
+  id          String   @id @default(uuid())
+  complaintId String
+  fileUrl     String
+  createdAt   DateTime @default(now())
+
+  // Relations
+  complaint   Complaint @relation(fields: [complaintId], references: [id], onDelete: Cascade)
+}
+
+model Opinion {
+  id          String           @id @default(uuid())
+  title       String
+  description String
+  category    String           // Academics, Hostel, etc.
+  isAnonymous Boolean          @default(false)
+  authorId    String?
+  createdAt   DateTime         @default(now())
+
+  // Relations
+  author      User?            @relation("StudentOpinions", fields: [authorId], references: [id], onDelete: SetNull)
+  supports    OpinionSupport[]
+}
+
+model OpinionSupport {
+  id        String   @id @default(uuid())
+  opinionId String
+  studentId String
+
+  // Relations
+  opinion   Opinion  @relation(fields: [opinionId], references: [id], onDelete: Cascade)
+  
+  @@unique([opinionId, studentId])
+}
+
+model News {
+  id         String   @id @default(uuid())
+  title      String
+  content    String
+  category   String   // Academics, Examination, Hostel, Mess, Events, Administration, Emergency
+  authorId   String
+  isVerified Boolean  @default(true)
+  imageUrl   String?
+  createdAt  DateTime @default(now())
+
+  // Relations
+  author     User     @relation("AdminNews", fields: [authorId], references: [id], onDelete: Cascade)
+}
+
+model Poll {
+  id          String       @id @default(uuid())
+  question    String
+  createdById String
+  isActive    Boolean      @default(true)
+  createdAt   DateTime     @default(now())
+
+  // Relations
+  creator     User         @relation("AdminPolls", fields: [createdById], references: [id], onDelete: Cascade)
+  options     PollOption[]
+}
+
+model PollOption {
+  id      String     @id @default(uuid())
+  pollId  String
+  text    String
+
+  // Relations
+  poll    Poll       @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  votes   PollVote[]
+}
+
+model PollVote {
+  id        String     @id @default(uuid())
+  optionId  String
+  studentId String
+
+  // Relations
+  option    PollOption @relation(fields: [optionId], references: [id], onDelete: Cascade)
+
+  @@unique([optionId, studentId])
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String
+  message   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  // Relations
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Escalation {
+  id                String   @id @default(uuid())
+  complaintId       String
+  previousAuthority String   // Role/Name of previous handler
+  currentAuthority  String   // Role/Name of current handler
+  escalationLevel   Int      // 1, 2, 3, etc.
+  deadline          DateTime
+  status            String   // PENDING, RESOLVED
+  escalatedAt       DateTime @default(now())
+
+  // Relations
+  complaint         Complaint @relation(fields: [complaintId], references: [id], onDelete: Cascade)
+}
