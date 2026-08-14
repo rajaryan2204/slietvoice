@@ -56,7 +56,8 @@ export function AdminSidebar() {
           <ShieldCheck className="w-5 h-5 text-indigo-500" />
           <div className="text-[11px] leading-tight">
             <span className="font-bold block text-slate-800 dark:text-slate-200">Admin Control</span>
-            <span className="text-muted-foreground">Authorized Access</span>
+            <span className="text-[10px] text-muted-foreground block mt-0.5">By Raj Aryan (InterviewX)</span>
+            <span className="text-[9px] text-slate-400">Authorized Access</span>
           </div>
         </div>
       </div>

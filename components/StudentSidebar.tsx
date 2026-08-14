@@ -56,7 +56,8 @@ export function StudentSidebar() {
           <GraduationCap className="w-5 h-5 text-primary" />
           <div className="text-[11px] leading-tight">
             <span className="font-bold block text-slate-800 dark:text-slate-200">SLIETVoice</span>
-            <span className="text-muted-foreground">Version 1.0.0</span>
+            <span className="text-[10px] text-muted-foreground block mt-0.5">By Raj Aryan (InterviewX)</span>
+            <span className="text-[9px] text-slate-400">Version 1.0.0</span>
           </div>
         </div>
       </div>
