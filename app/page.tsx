@@ -272,8 +272,11 @@ export default async function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="mt-auto py-8 text-center border-t border-slate-200 dark:border-slate-800 text-xs text-muted-foreground">
-        <p>&copy; 2026 SLIETVoice. All rights reserved. Designed for modern university governance.</p>
+      <footer className="mt-auto py-8 text-center border-t border-slate-200 dark:border-slate-800 text-xs text-muted-foreground space-y-1">
+        <p>&copy; 2026 SLIETVoice. All rights reserved.</p>
+        <p className="text-[10px] text-slate-500">
+          Created by <span className="font-semibold text-slate-700 dark:text-slate-300">Raj Aryan</span> (Creator of <span className="text-primary font-semibold">InterviewX</span>). Designed for modern university governance.
+        </p>
       </footer>
     </div>
   );
