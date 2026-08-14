@@ -1,11 +1,13 @@
 import React from "react";
 import Link from "next/link";
 import { GraduationCap, Sparkles, Terminal, Globe, Heart } from "lucide-react";
+import { Navbar } from "@/components/Navbar";
 
 export default function AboutPage() {
   return (
-    <div className="min-h-[calc(100vh-4rem)] bg-slate-50 dark:bg-slate-950 py-16 px-6">
-      <div className="max-w-4xl mx-auto space-y-12">
+    <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-950">
+      <Navbar />
+      <div className="flex-1 py-16 px-6 max-w-4xl mx-auto space-y-12 w-full">
         
         {/* Hero Section */}
         <div className="text-center space-y-4">
