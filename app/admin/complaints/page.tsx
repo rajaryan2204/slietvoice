@@ -56,16 +56,13 @@ export default async function AdminComplaintsPage({ searchParams }: { searchPara
       </div>
 
       {/* Advanced Filters */}
-      <div className="bg-card text-card-foreground border border-slate-200 dark:border-slate-800 p-5 rounded-xl flex flex-wrap gap-4 items-end shadow-sm">
+      <form method="GET" action="/admin/complaints" className="bg-card text-card-foreground border border-slate-200 dark:border-slate-800 p-5 rounded-xl flex flex-wrap gap-4 items-end shadow-sm">
         <div>
-          <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-650 dark:text-slate-400 mb-1.5">
+          <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-655 dark:text-slate-400 mb-1.5">
             Status
           </label>
           <select
             defaultValue={filterStatus}
-            onChange={(e) => {
-              // Standard client redirect or simple query params link is simulated via form action/GET
-            }}
             className="px-3 py-1.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-xs font-semibold focus:outline-none"
             name="status"
           >
@@ -80,7 +77,7 @@ export default async function AdminComplaintsPage({ searchParams }: { searchPara
         </div>
 
         <div>
-          <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-650 dark:text-slate-400 mb-1.5">
+          <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-655 dark:text-slate-400 mb-1.5">
             Priority
           </label>
           <select
@@ -97,7 +94,7 @@ export default async function AdminComplaintsPage({ searchParams }: { searchPara
         </div>
 
         <div>
-          <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-650 dark:text-slate-400 mb-1.5">
+          <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-655 dark:text-slate-400 mb-1.5">
             Department
           </label>
           <select
@@ -114,19 +111,13 @@ export default async function AdminComplaintsPage({ searchParams }: { searchPara
           </select>
         </div>
 
-        {/* Since Next.js 15 server component search params require a URL change, let's wrap this in a neat GET form to submit search params */}
-        <form method="GET" action="/admin/complaints" className="flex gap-2">
-          <input type="hidden" name="status" value={filterStatus} />
-          <input type="hidden" name="priority" value={filterPriority} />
-          <input type="hidden" name="departmentId" value={filterDept} />
-          <button
-            type="submit"
-            className="bg-primary text-primary-foreground font-semibold px-4 py-2 rounded-lg text-xs hover:bg-primary/95 transition-all shadow-sm shadow-primary/10 cursor-pointer"
-          >
-            Reset/Apply Filters
-          </button>
-        </form>
-      </div>
+        <button
+          type="submit"
+          className="bg-primary text-primary-foreground font-semibold px-4 py-2 rounded-lg text-xs hover:bg-primary/95 transition-all shadow-sm shadow-primary/10 cursor-pointer h-[32px] flex items-center justify-center"
+        >
+          Apply Filters
+        </button>
+      </form>
 
       {/* Complaints Data Table */}
       {complaints.length > 0 ? (
