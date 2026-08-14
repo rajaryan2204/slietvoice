@@ -313,3 +313,25 @@ export async function escalateComplaintAction(complaintId: string, message: stri
     return { error: error.message || "Failed to escalate complaint" };
   }
 }
+
+export async function upvoteComplaintAction(complaintId: string, increment: boolean) {
+  const user = await getSessionUser();
+  if (!user) {
+    return { error: "Only logged-in users can support complaints" };
+  }
+  try {
+    const complaint = await db.complaint.update({
+      where: { id: complaintId },
+      data: {
+        upvotes: {
+          [increment ? "increment" : "decrement"]: 1
+        }
+      }
+    });
+    revalidatePath("/student/dashboard");
+    revalidatePath("/student/complaints");
+    return { success: true, upvotes: complaint.upvotes };
+  } catch (error: any) {
+    return { error: error.message || "Failed to support complaint" };
+  }
+}

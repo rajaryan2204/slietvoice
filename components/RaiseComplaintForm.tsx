@@ -13,6 +13,49 @@ interface Department {
 export function RaiseComplaintForm({ departments }: { departments: Department[] }) {
   const [state, formAction, isPending] = useActionState(raiseComplaintAction, null);
   const [isAnonymous, setIsAnonymous] = useState(false);
+  const [evidenceFile, setEvidenceFile] = useState<{ name: string; size: string; preview: string } | null>(null);
+  const [isDragActive, setIsDragActive] = useState(false);
+
+  const handleDrag = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.type === "dragenter" || e.type === "dragover") {
+      setIsDragActive(true);
+    } else if (e.type === "dragleave") {
+      setIsDragActive(false);
+    }
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragActive(false);
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      const file = e.dataTransfer.files[0];
+      const previewUrl = URL.createObjectURL(file);
+      setEvidenceFile({
+        name: file.name,
+        size: (file.size / 1024).toFixed(1) + " KB",
+        preview: file.type.startsWith("image/") ? previewUrl : ""
+      });
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      const previewUrl = URL.createObjectURL(file);
+      setEvidenceFile({
+        name: file.name,
+        size: (file.size / 1024).toFixed(1) + " KB",
+        preview: file.type.startsWith("image/") ? previewUrl : ""
+      });
+    }
+  };
+
+  const clearFile = () => {
+    setEvidenceFile(null);
+  };
 
   if (state?.success) {
     return (
@@ -150,14 +193,59 @@ export function RaiseComplaintForm({ departments }: { departments: Department[] 
 
           <div>
             <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1.5">
-              Evidence Link (Optional)
+              Evidence Files / Photo (Optional)
             </label>
-            <input
-              name="evidenceUrl"
-              type="text"
-              placeholder="e.g. Image URL or Shared Drive Link"
-              className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all"
-            />
+            <div
+              onDragEnter={handleDrag}
+              onDragOver={handleDrag}
+              onDragLeave={handleDrag}
+              onDrop={handleDrop}
+              className={`border-2 border-dashed rounded-xl p-3.5 text-center transition-all duration-200 relative flex flex-col items-center justify-center min-h-[92px] ${
+                isDragActive
+                  ? "border-primary bg-primary/5"
+                  : "border-slate-200 dark:border-slate-800 hover:border-slate-350 dark:hover:border-slate-700 bg-slate-50 dark:bg-slate-950/20"
+              }`}
+            >
+              {evidenceFile ? (
+                <div className="flex items-center gap-3 w-full text-left">
+                  {evidenceFile.preview ? (
+                    <img src={evidenceFile.preview} alt="preview" className="w-10 h-10 rounded object-cover border border-slate-200 dark:border-slate-800" />
+                  ) : (
+                    <div className="w-10 h-10 bg-slate-200 dark:bg-slate-800 rounded flex items-center justify-center text-[10px] font-bold">PDF</div>
+                  )}
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs font-bold text-slate-900 dark:text-slate-100 truncate">{evidenceFile.name}</p>
+                    <p className="text-[10px] text-muted-foreground">{evidenceFile.size}</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={clearFile}
+                    className="text-[10px] font-bold text-rose-500 hover:underline px-2 py-1 rounded hover:bg-rose-500/10 transition-all cursor-pointer"
+                  >
+                    Remove
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 font-semibold mb-0.5">
+                    Drag & drop files or <span className="text-primary hover:underline cursor-pointer">browse</span>
+                  </p>
+                  <p className="text-[9px] text-slate-450 dark:text-slate-500">Supports JPG, PNG, PDF (max 5MB)</p>
+                </>
+              )}
+              <input
+                type="file"
+                name="evidenceFile"
+                accept="image/*,application/pdf"
+                onChange={handleFileChange}
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+              />
+              <input
+                type="hidden"
+                name="evidenceUrl"
+                value={evidenceFile ? `Uploaded: ${evidenceFile.name}` : ""}
+              />
+            </div>
           </div>
         </div>
 

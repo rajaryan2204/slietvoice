@@ -54,6 +54,23 @@ export default async function StudentDashboard() {
     orderBy: { createdAt: "desc" },
   });
 
+  // 4b. Fetch global category distribution to display as a campus-wide trends tracker
+  const globalCategoryStats = await db.complaint.groupBy({
+    by: ['category'],
+    where: {
+      status: { not: "RESOLVED" }
+    },
+    _count: {
+      id: true
+    },
+    orderBy: {
+      _count: {
+        id: 'desc'
+      }
+    },
+    take: 4
+  });
+
   // 5. Fetch first active poll
   const activePoll = await db.poll.findFirst({
     where: { isActive: true },
@@ -210,6 +227,43 @@ export default async function StudentDashboard() {
 
         {/* Right Column: News & Notifications */}
         <div className="space-y-8">
+          {/* Global Category Distribution Tracker */}
+          <div className="bg-card text-card-foreground border border-slate-200 dark:border-slate-800 rounded-xl p-5 shadow-sm">
+            <h2 className="text-sm font-extrabold text-slate-900 dark:text-white mb-1.5 flex items-center gap-1.5">
+              <TrendingUp className="w-4 h-4 text-primary" />
+              Active Campus Grievance Trends
+            </h2>
+            <p className="text-[10px] text-muted-foreground mb-4">
+              Real-time distribution of unresolved complaints across SLIET categories.
+            </p>
+
+            <div className="space-y-3.5">
+              {globalCategoryStats.length > 0 ? (
+                globalCategoryStats.map((stat) => {
+                  const totalGrievancesCount = globalCategoryStats.reduce((sum, item) => sum + item._count.id, 0);
+                  const percentage = totalGrievancesCount > 0 ? Math.round((stat._count.id / totalGrievancesCount) * 100) : 0;
+                  
+                  return (
+                    <div key={stat.category} className="space-y-1">
+                      <div className="flex justify-between text-xs font-semibold">
+                        <span className="text-slate-700 dark:text-slate-350">{stat.category}</span>
+                        <span className="text-slate-900 dark:text-white">{stat._count.id} ({percentage}%)</span>
+                      </div>
+                      <div className="w-full h-2 bg-slate-100 dark:bg-slate-900 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-primary rounded-full transition-all duration-500"
+                          style={{ width: `${percentage}%` }}
+                        />
+                      </div>
+                    </div>
+                  );
+                })
+              ) : (
+                <p className="text-xs text-muted-foreground text-center py-2">No active grievances logged.</p>
+              )}
+            </div>
+          </div>
+
           {/* Latest News */}
           <div>
             <div className="flex items-center justify-between mb-4">

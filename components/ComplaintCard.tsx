@@ -1,8 +1,11 @@
-import React from "react";
+"use client";
+
+import React, { useState, useTransition } from "react";
 import Link from "next/link";
 import { StatusBadge } from "./StatusBadge";
 import { PriorityBadge } from "./PriorityBadge";
-import { Calendar, Tag, ShieldCheck, MapPin } from "lucide-react";
+import { Calendar, Tag, ShieldCheck, Heart } from "lucide-react";
+import { upvoteComplaintAction } from "@/actions/complaints";
 
 interface ComplaintCardProps {
   complaint: {
@@ -14,6 +17,7 @@ interface ComplaintCardProps {
     status: string;
     isAnonymous: boolean;
     createdAt: Date | string;
+    upvotes?: number;
     student?: { name: string } | null;
   };
   isAdmin?: boolean;
@@ -26,6 +30,40 @@ export function ComplaintCard({ complaint, isAdmin = false }: ComplaintCardProps
     day: "numeric",
   });
 
+  const [upvotes, setUpvotes] = useState(complaint.upvotes || 0);
+  const [hasUpvoted, setHasUpvoted] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem(`upvoted_${complaint.id}`) === "true";
+    }
+    return false;
+  });
+  const [isPending, startTransition] = useTransition();
+
+  const handleUpvote = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (isPending) return;
+
+    const nextUpvoted = !hasUpvoted;
+    setHasUpvoted(nextUpvoted);
+    setUpvotes((prev) => (nextUpvoted ? prev + 1 : prev - 1));
+    if (typeof window !== "undefined") {
+      localStorage.setItem(`upvoted_${complaint.id}`, String(nextUpvoted));
+    }
+
+    startTransition(async () => {
+      const res = await upvoteComplaintAction(complaint.id, nextUpvoted);
+      if (res.error) {
+        setHasUpvoted(!nextUpvoted);
+        setUpvotes((prev) => (!nextUpvoted ? prev + 1 : prev - 1));
+        if (typeof window !== "undefined") {
+          localStorage.setItem(`upvoted_${complaint.id}`, String(!nextUpvoted));
+        }
+        alert(res.error);
+      }
+    });
+  };
+
   const detailUrl = isAdmin
     ? `/admin/complaints/${complaint.id}`
     : `/student/complaints/${complaint.id}`;
@@ -34,8 +72,29 @@ export function ComplaintCard({ complaint, isAdmin = false }: ComplaintCardProps
     <div className="bg-card text-card-foreground border border-slate-200 dark:border-slate-800 rounded-xl p-5 hover:shadow-md transition-all duration-200 flex flex-col justify-between group">
       <div>
         <div className="flex items-center justify-between gap-2 mb-3">
-          <span className="font-mono text-xs font-semibold text-muted-foreground group-hover:text-primary transition-colors">
+          <span className="font-mono text-xs font-semibold text-muted-foreground group-hover:text-primary transition-colors flex items-center gap-1.5">
             {complaint.id}
+            {!isAdmin && (
+              <button
+                onClick={handleUpvote}
+                disabled={isPending}
+                className={`ml-2 flex items-center gap-1 px-2.5 py-0.5 rounded-full border text-[10px] font-bold transition-all duration-150 cursor-pointer ${
+                  hasUpvoted
+                    ? "bg-rose-500/10 border-rose-500/30 text-rose-600 dark:text-rose-400"
+                    : "bg-slate-50 border-slate-200 hover:bg-slate-100 dark:bg-slate-900 dark:border-slate-800 dark:hover:bg-slate-800 text-slate-550"
+                }`}
+                title="Support this grievance"
+              >
+                <Heart className={`w-3 h-3 transition-colors ${hasUpvoted ? "fill-rose-500 text-rose-500" : ""}`} />
+                <span>{upvotes} Support</span>
+              </button>
+            )}
+            {isAdmin && complaint.upvotes !== undefined && (
+              <span className="ml-2 flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-[10px] font-bold text-muted-foreground">
+                <Heart className="w-3 h-3 text-slate-400" />
+                <span>{complaint.upvotes} Support</span>
+              </span>
+            )}
           </span>
           <div className="flex items-center gap-2">
             <PriorityBadge priority={complaint.priority} />

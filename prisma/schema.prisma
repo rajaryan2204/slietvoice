@@ -49,6 +49,7 @@ model Complaint {
   priority     String              // LOW, MEDIUM, HIGH, URGENT
   status       String              // SUBMITTED, UNDER_REVIEW, ASSIGNED, ACTION_TAKEN, RESOLVED, ESCALATED
   isAnonymous  Boolean             @default(false)
+  upvotes      Int                 @default(0)
   departmentId String?
   studentId    String?             // Can be null if anonymous
   createdAt    DateTime            @default(now())

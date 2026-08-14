@@ -76,7 +76,14 @@ export function PollCard({ poll, hasVoted: initialHasVoted, votedOptionId: initi
 
           if (hasVoted || !poll.isActive) {
             return (
-              <div key={option.id} className="relative py-2.5 px-4 border border-slate-100 dark:border-slate-800 rounded-lg overflow-hidden bg-slate-50/50 dark:bg-slate-950/20">
+              <div
+                key={option.id}
+                className={`relative py-2.5 px-4 border rounded-lg overflow-hidden bg-slate-50/50 dark:bg-slate-950/20 transition-all ${
+                  isUserSelection
+                    ? "border-primary/40 bg-primary/5 dark:bg-primary/10"
+                    : "border-slate-100 dark:border-slate-800/80"
+                }`}
+              >
                 {/* Visual Fill Percentage Bar */}
                 <div
                   className={`absolute left-0 top-0 bottom-0 transition-all duration-500 ease-out ${
