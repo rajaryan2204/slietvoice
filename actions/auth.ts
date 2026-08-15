@@ -15,7 +15,7 @@ const signupSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Invalid email format"),
   password: z.string().min(6, "Password must be at least 6 characters"),
-  studentId: z.string().min(3, "Student ID is required"),
+  studentId: z.string().regex(/^\d+$/, "Registration number must contain only numbers (e.g. 2614244)"),
   year: z.coerce.number().min(1).max(5),
   departmentId: z.string().min(1, "Department is required"),
 });

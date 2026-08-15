@@ -84,7 +84,7 @@ export async function GET(request: NextRequest) {
           departmentId,
           profile: {
             create: {
-              studentId: `G-${Math.random().toString().slice(2, 8)}`,
+              studentId: Math.floor(1000000 + Math.random() * 9000000).toString(),
               year: 1,
               departmentId: departmentId || "default-dept",
             },
