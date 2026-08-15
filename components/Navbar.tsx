@@ -2,7 +2,6 @@
 import React from "react";
 import Link from "next/link";
 import { getSessionUser } from "@/lib/auth";
-import { logoutAction } from "@/actions/auth";
 import { db } from "@/lib/db";
 import { Bell, LogOut, GraduationCap } from "lucide-react";
 
@@ -17,10 +16,7 @@ export async function Navbar() {
   }
 
 
-  async function handleLogout() {
-    "use server";
-    await logoutAction();
-  }
+
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-slate-200 dark:border-slate-800 bg-card/85 backdrop-blur-md">
@@ -92,15 +88,13 @@ export async function Navbar() {
               </div>
 
               {/* Logout Button */}
-              <form action={handleLogout}>
-                <button
-                  type="submit"
-                  title="Logout"
-                  className="p-2 text-slate-500 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/20 rounded-full transition-colors flex items-center justify-center cursor-pointer"
-                >
-                  <LogOut className="w-5 h-5" />
-                </button>
-              </form>
+              <a
+                href="/api/auth/logout"
+                title="Logout"
+                className="p-2 text-slate-500 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/20 rounded-full transition-colors flex items-center justify-center cursor-pointer"
+              >
+                <LogOut className="w-5 h-5" />
+              </a>
             </>
           ) : (
             <div className="flex items-center gap-3">
