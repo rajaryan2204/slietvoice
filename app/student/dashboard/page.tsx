@@ -32,6 +32,12 @@ export default async function StudentDashboard() {
   const resolvedCount = await db.complaint.count({
     where: { studentId: user.id, status: "RESOLVED" },
   });
+  const escalatedCount = await db.complaint.count({
+    where: { studentId: user.id, status: "ESCALATED" },
+  });
+  const underReviewCount = await db.complaint.count({
+    where: { studentId: user.id, status: "UNDER_REVIEW" },
+  });
 
   // 2. Fetch active complaints
   const recentComplaints = await db.complaint.findMany({
@@ -103,84 +109,78 @@ export default async function StudentDashboard() {
   }
 
   return (
-    <div className="space-y-8">
-      {/* Welcome Header */}
-      <div>
-        <h1 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white">
-          Welcome back, {user.name} 👋
-        </h1>
-        <p className="text-sm text-muted-foreground mt-1">
-          Here is what is happening on campus today.
-        </p>
-      </div>
-
-      {/* Quick Action Grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <Link
-          href="/student/complaints/new"
-          className="flex flex-col items-center justify-center p-4 bg-primary text-primary-foreground rounded-xl shadow-sm hover:opacity-95 transition-opacity text-center cursor-pointer"
-        >
-          <MessageSquarePlus className="w-6 h-6 mb-2" />
-          <span className="text-xs font-bold">Raise Complaint</span>
-        </Link>
-        <Link
-          href="/student/voice"
-          className="flex flex-col items-center justify-center p-4 bg-card text-card-foreground border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm hover:bg-slate-50 dark:hover:bg-slate-900 text-center cursor-pointer"
-        >
-          <Compass className="w-6 h-6 text-primary mb-2" />
-          <span className="text-xs font-bold">Share Opinion</span>
-        </Link>
-        <Link
-          href="/student/news"
-          className="flex flex-col items-center justify-center p-4 bg-card text-card-foreground border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm hover:bg-slate-50 dark:hover:bg-slate-900 text-center cursor-pointer"
-        >
-          <Newspaper className="w-6 h-6 text-primary mb-2" />
-          <span className="text-xs font-bold">View Campus News</span>
-        </Link>
-        <Link
-          href="/student/complaints"
-          className="flex flex-col items-center justify-center p-4 bg-card text-card-foreground border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm hover:bg-slate-50 dark:hover:bg-slate-900 text-center cursor-pointer"
-        >
-          <Bell className="w-6 h-6 text-primary mb-2" />
-          <span className="text-xs font-bold">Track Status</span>
-        </Link>
-      </div>
-
-      {/* Stat Cards */}
-      <div className="grid grid-cols-3 gap-4">
-        <div className="bg-card text-card-foreground border border-slate-200 dark:border-slate-800 rounded-xl p-4 flex items-center gap-3">
-          <div className="p-2.5 bg-blue-50 dark:bg-blue-950/20 text-blue-600 rounded-lg">
-            <AlertCircle className="w-5 h-5" />
-          </div>
+    <div className="space-y-6">
+      {/* Editorial Heading */}
+      <div className="border-b-2 border-foreground dark:border-border pb-6">
+        <div className="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
           <div>
-            <span className="block text-lg font-extrabold">{totalComplaints}</span>
-            <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">
-              Total Grievances
+            <span className="font-serif text-5xl md:text-6xl font-black tracking-tighter uppercase block">
+              SLIETVOICE
+            </span>
+            <span className="text-xs uppercase font-bold tracking-widest text-slate-500 block mt-1">
+              Students speak. Campus listens.
+            </span>
+          </div>
+          <div className="text-left md:text-right">
+            <span className="text-sm font-black uppercase tracking-wider block font-mono">
+              {new Date().toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}
+            </span>
+            <span className="text-xs text-muted-foreground block mt-0.5">
+              Welcome back, {user.name}
             </span>
           </div>
         </div>
+      </div>
 
-        <div className="bg-card text-card-foreground border border-slate-200 dark:border-slate-800 rounded-xl p-4 flex items-center gap-3">
-          <div className="p-2.5 bg-yellow-50 dark:bg-yellow-950/20 text-yellow-600 rounded-lg">
-            <Clock className="w-5 h-5 animate-spin-slow" />
-          </div>
-          <div>
-            <span className="block text-lg font-extrabold">{pendingCount}</span>
-            <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">
-              Pending Actions
-            </span>
-          </div>
+      {/* Large Editorial Numbers */}
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-6 py-6 border-b border-border text-left">
+        <div>
+          <span className="block text-4xl font-serif font-black">{totalComplaints}</span>
+          <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Grievances Raised</span>
         </div>
+        <div>
+          <span className="block text-4xl font-serif font-black text-teal-700 dark:text-teal-400">{resolvedCount}</span>
+          <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Cases Resolved</span>
+        </div>
+        <div>
+          <span className="block text-4xl font-serif font-black text-amber-700 dark:text-amber-500">{underReviewCount}</span>
+          <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Under Review</span>
+        </div>
+        <div>
+          <span className="block text-4xl font-serif font-black text-rose-700 dark:text-rose-500">{escalatedCount}</span>
+          <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Escalated Cases</span>
+        </div>
+        <div className="col-span-2 md:col-span-1 flex items-center justify-start md:justify-end">
+          <Link
+            href="/student/complaints/new"
+            className="inline-flex items-center gap-1.5 bg-primary text-primary-foreground font-bold px-4 py-2 rounded text-xs tracking-wider uppercase hover:opacity-95 transition-opacity"
+          >
+            + Raise Concern
+          </Link>
+        </div>
+      </div>
 
-        <div className="bg-card text-card-foreground border border-slate-200 dark:border-slate-800 rounded-xl p-4 flex items-center gap-3">
-          <div className="p-2.5 bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 rounded-lg">
-            <CheckCircle2 className="w-5 h-5" />
+      {/* Campus Today Section */}
+      <div className="py-6 border-b border-border">
+        <h2 className="text-[10px] font-black tracking-widest text-slate-400 uppercase mb-4">
+          Campus Today
+        </h2>
+        <div className="space-y-3.5 text-xs leading-relaxed">
+          <div className="flex flex-col md:flex-row md:items-baseline gap-2">
+            <span className="font-bold uppercase tracking-wider text-teal-700 dark:text-teal-400 min-w-[120px] block">ACADEMICS</span>
+            <span className="text-slate-750 dark:text-slate-350">Mid-semester examinations review schedules are now live on the portal.</span>
           </div>
-          <div>
-            <span className="block text-lg font-extrabold">{resolvedCount}</span>
-            <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">
-              Resolved Cases
-            </span>
+          <div className="flex flex-col md:flex-row md:items-baseline gap-2 pt-2.5 border-t border-dashed border-border">
+            <span className="font-bold uppercase tracking-wider text-teal-700 dark:text-teal-400 min-w-[120px] block">HOSTEL</span>
+            <span className="text-slate-750 dark:text-slate-350">Routine maintenance and solar water purifier system repairs scheduled for next Sunday.</span>
+          </div>
+          <div className="flex flex-col md:flex-row md:items-baseline gap-2 pt-2.5 border-t border-dashed border-border">
+            <span className="font-bold uppercase tracking-wider text-teal-700 dark:text-teal-400 min-w-[120px] block">EVENTS</span>
+            <span className="text-slate-755 dark:text-slate-355">Inter-hostel volleyball and cricket tournament registration is open at PG Block ground.</span>
+          </div>
+          <div className="flex flex-col md:flex-row md:items-baseline gap-2 pt-2.5 border-t border-dashed border-border">
+            <span className="font-bold uppercase tracking-wider text-teal-700 dark:text-teal-400 min-w-[120px] block">ADMINISTRATION</span>
+            <span className="text-slate-750 dark:text-slate-350">New campus wifi access guidelines issued for all student hostels.</span>
           </div>
         </div>
       </div>
@@ -192,10 +192,10 @@ export default async function StudentDashboard() {
           {/* Active Grievances */}
           <div>
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-extrabold text-slate-900 dark:text-white">
+              <h2 className="text-[10px] font-black tracking-widest text-slate-400 uppercase">
                 My Recent Grievances
               </h2>
-              <Link href="/student/complaints" className="text-xs font-semibold text-primary hover:underline">
+              <Link href="/student/complaints" className="text-xs font-semibold text-primary hover:underline uppercase tracking-wider">
                 View all &rarr;
               </Link>
             </div>
@@ -217,7 +217,7 @@ export default async function StudentDashboard() {
           {/* Active Poll */}
           {activePoll && (
             <div>
-              <h2 className="text-lg font-extrabold text-slate-900 dark:text-white mb-4">
+              <h2 className="text-[10px] font-black tracking-widest text-slate-400 uppercase mb-4">
                 Official Campus Poll
               </h2>
               <PollCard poll={activePoll} hasVoted={hasVoted} votedOptionId={votedOptionId} />
@@ -228,13 +228,13 @@ export default async function StudentDashboard() {
         {/* Right Column: News & Notifications */}
         <div className="space-y-8">
           {/* Global Category Distribution Tracker */}
-          <div className="bg-card text-card-foreground border border-slate-200 dark:border-slate-800 rounded-xl p-5 shadow-sm">
-            <h2 className="text-sm font-extrabold text-slate-900 dark:text-white mb-1.5 flex items-center gap-1.5">
-              <TrendingUp className="w-4 h-4 text-primary" />
+          <div className="bg-card text-card-foreground border border-slate-200 dark:border-slate-800/80 rounded-[8px] p-5 shadow-none">
+            <h2 className="text-[10px] font-black tracking-widest text-slate-450 dark:text-slate-400 uppercase mb-1.5 flex items-center gap-1.5">
+              <TrendingUp className="w-3.5 h-3.5 text-primary" />
               Active Campus Grievance Trends
             </h2>
             <p className="text-[10px] text-muted-foreground mb-4">
-              Real-time distribution of unresolved complaints across SLIET categories.
+              Real-time distribution of unresolved complaints across categories.
             </p>
 
             <div className="space-y-3.5">
@@ -249,7 +249,7 @@ export default async function StudentDashboard() {
                         <span className="text-slate-700 dark:text-slate-350">{stat.category}</span>
                         <span className="text-slate-900 dark:text-white">{stat._count.id} ({percentage}%)</span>
                       </div>
-                      <div className="w-full h-2 bg-slate-100 dark:bg-slate-900 rounded-full overflow-hidden">
+                      <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-900 rounded-full overflow-hidden">
                         <div
                           className="h-full bg-primary rounded-full transition-all duration-500"
                           style={{ width: `${percentage}%` }}

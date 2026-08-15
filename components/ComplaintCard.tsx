@@ -69,7 +69,7 @@ export function ComplaintCard({ complaint, isAdmin = false }: ComplaintCardProps
     : `/student/complaints/${complaint.id}`;
 
   return (
-    <div className="bg-card text-card-foreground border border-slate-200 dark:border-slate-800 rounded-xl p-5 hover:shadow-md transition-all duration-200 flex flex-col justify-between group">
+    <div className="bg-card text-card-foreground border border-slate-200 dark:border-slate-800/80 rounded-[8px] p-5 hover:border-slate-400 dark:hover:border-slate-600 transition-all duration-200 flex flex-col justify-between group shadow-none">
       <div>
         <div className="flex items-center justify-between gap-2 mb-3">
           <span className="font-mono text-xs font-semibold text-muted-foreground group-hover:text-primary transition-colors flex items-center gap-1.5">

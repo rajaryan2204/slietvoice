@@ -98,28 +98,39 @@ export function RaiseComplaintForm({ departments }: { departments: Department[] 
   }
 
   return (
-    <div className="bg-card text-card-foreground border border-slate-200 dark:border-slate-800 rounded-xl p-6 md:p-8 max-w-2xl mx-auto shadow-md">
-      <div className="flex items-center gap-3 mb-6">
-        <div className="p-2 bg-primary/10 rounded-lg text-primary">
-          <MessageSquarePlus className="w-5 h-5" />
-        </div>
-        <div>
-          <h2 className="text-lg font-bold">Submit a Grievance</h2>
-          <p className="text-xs text-muted-foreground mt-0.5">
-            File a formal complaint to the respective university departments.
-          </p>
-        </div>
+    <div className="max-w-2xl mx-auto">
+      {/* Editorial Title */}
+      <div className="border-b-2 border-foreground dark:border-border pb-6 mb-6">
+        <h1 className="text-3xl font-serif font-black text-slate-900 dark:text-white uppercase tracking-tight">
+          RAISE A CONCERN
+        </h1>
+        <p className="text-xs font-bold uppercase tracking-widest text-slate-500 mt-1">
+          "Tell us what is happening. We'll make sure it reaches the right people."
+        </p>
+      </div>
+
+      {/* Stepper progress indicator */}
+      <div className="flex flex-wrap items-center gap-y-2 gap-x-4 border-b border-border pb-6 mb-6 text-[10px] font-mono text-muted-foreground uppercase">
+        <span className="font-bold text-teal-700 dark:text-teal-400">01 Tell us about it.</span>
+        <span className="text-slate-300">&rarr;</span>
+        <span className="font-bold text-slate-600 dark:text-slate-400">02 Location</span>
+        <span className="text-slate-300">&rarr;</span>
+        <span className="font-bold text-slate-600 dark:text-slate-400">03 Details</span>
+        <span className="text-slate-300">&rarr;</span>
+        <span className="font-bold text-slate-600 dark:text-slate-400">04 Evidence</span>
+        <span className="text-slate-300">&rarr;</span>
+        <span className="font-bold text-slate-600 dark:text-slate-400">05 Submit</span>
       </div>
 
       <form action={formAction} className="space-y-5">
         {state?.error && (
-          <div className="bg-destructive/10 border border-destructive/20 text-destructive text-xs font-semibold p-3 rounded-lg text-center">
+          <div className="bg-destructive/10 border border-destructive/20 text-destructive text-xs font-bold p-3 rounded-[4px] text-center uppercase tracking-wider">
             {state.error}
           </div>
         )}
 
         <div>
-          <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1.5">
+          <label className="block text-[10px] font-black uppercase tracking-wider text-slate-500 mb-1.5">
             Complaint Title
           </label>
           <input
@@ -127,19 +138,19 @@ export function RaiseComplaintForm({ departments }: { departments: Department[] 
             type="text"
             placeholder="e.g. South Mess food hygiene issues during dinner"
             required
-            className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all"
+            className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-205 dark:border-slate-800 rounded-[4px] text-xs focus:outline-none focus:ring-1 focus:ring-primary transition-all"
           />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1.5">
+            <label className="block text-[10px] font-black uppercase tracking-wider text-slate-500 mb-1.5">
               Category
             </label>
             <select
               name="category"
               required
-              className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all"
+              className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-205 dark:border-slate-800 rounded-[4px] text-xs focus:outline-none focus:ring-1 focus:ring-primary transition-all"
             >
               <option value="Academics">Academics</option>
               <option value="Hostel">Hostel</option>
@@ -156,13 +167,13 @@ export function RaiseComplaintForm({ departments }: { departments: Department[] 
           </div>
 
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1.5">
+            <label className="block text-[10px] font-black uppercase tracking-wider text-slate-500 mb-1.5">
               Target Department
             </label>
             <select
               name="departmentId"
               required
-              className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all"
+              className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-205 dark:border-slate-800 rounded-[4px] text-xs focus:outline-none focus:ring-1 focus:ring-primary transition-all"
             >
               <option value="">Select Department</option>
               {departments.map((dept) => (
@@ -176,13 +187,13 @@ export function RaiseComplaintForm({ departments }: { departments: Department[] 
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1.5">
+            <label className="block text-[10px] font-black uppercase tracking-wider text-slate-500 mb-1.5">
               Priority
             </label>
             <select
               name="priority"
               required
-              className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all"
+              className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-205 dark:border-slate-800 rounded-[4px] text-xs focus:outline-none focus:ring-1 focus:ring-primary transition-all"
             >
               <option value="LOW">Low - General Feedback</option>
               <option value="MEDIUM">Medium - Performance/Utility degradation</option>
@@ -192,7 +203,7 @@ export function RaiseComplaintForm({ departments }: { departments: Department[] 
           </div>
 
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1.5">
+            <label className="block text-[10px] font-black uppercase tracking-wider text-slate-500 mb-1.5">
               Evidence Files / Photo (Optional)
             </label>
             <div
@@ -200,7 +211,7 @@ export function RaiseComplaintForm({ departments }: { departments: Department[] 
               onDragOver={handleDrag}
               onDragLeave={handleDrag}
               onDrop={handleDrop}
-              className={`border-2 border-dashed rounded-xl p-3.5 text-center transition-all duration-200 relative flex flex-col items-center justify-center min-h-[92px] ${
+              className={`border border-dashed rounded-[4px] p-3.5 text-center transition-all duration-200 relative flex flex-col items-center justify-center min-h-[92px] ${
                 isDragActive
                   ? "border-primary bg-primary/5"
                   : "border-slate-200 dark:border-slate-800 hover:border-slate-350 dark:hover:border-slate-700 bg-slate-50 dark:bg-slate-950/20"
@@ -227,7 +238,7 @@ export function RaiseComplaintForm({ departments }: { departments: Department[] 
                 </div>
               ) : (
                 <>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 font-semibold mb-0.5">
+                  <p className="text-xs text-slate-605 dark:text-slate-400 font-semibold mb-0.5">
                     Drag & drop files or <span className="text-primary hover:underline cursor-pointer">browse</span>
                   </p>
                   <p className="text-[9px] text-slate-450 dark:text-slate-500">Supports JPG, PNG, PDF (max 5MB)</p>
@@ -250,7 +261,7 @@ export function RaiseComplaintForm({ departments }: { departments: Department[] 
         </div>
 
         <div>
-          <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1.5">
+          <label className="block text-[10px] font-black uppercase tracking-wider text-slate-500 mb-1.5">
             Complaint Description
           </label>
           <textarea
@@ -258,15 +269,15 @@ export function RaiseComplaintForm({ departments }: { departments: Department[] 
             rows={5}
             required
             placeholder="Provide a detailed description of the problem, including specific block numbers, room details, dates, and impact on students..."
-            className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all"
+            className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-205 dark:border-slate-800 rounded-[4px] text-xs focus:outline-none focus:ring-1 focus:ring-primary transition-all"
           />
         </div>
 
         {/* Anonymous Toggle with Alert */}
-        <div className="border border-slate-200 dark:border-slate-800 rounded-xl p-4 bg-slate-50 dark:bg-slate-950">
+        <div className="border border-slate-200 dark:border-slate-800/80 rounded-[8px] p-4 bg-slate-50 dark:bg-slate-950">
           <div className="flex items-center justify-between">
             <div>
-              <span className="text-xs font-bold text-slate-850 dark:text-slate-200 block">
+              <span className="text-xs font-bold text-slate-800 dark:text-slate-200 block">
                 Submit Anonymously
               </span>
               <span className="text-[10px] text-muted-foreground block mt-0.5 max-w-sm">
@@ -277,14 +288,14 @@ export function RaiseComplaintForm({ departments }: { departments: Department[] 
               type="checkbox"
               checked={isAnonymous}
               onChange={(e) => setIsAnonymous(e.target.checked)}
-              className="w-5 h-5 text-primary bg-slate-100 border-slate-300 rounded focus:ring-primary cursor-pointer"
+              className="w-5 h-5 text-primary bg-slate-100 border-slate-350 rounded focus:ring-primary cursor-pointer"
             />
             {/* hidden field to pass anonymous state to Server Action */}
             <input type="hidden" name="isAnonymous" value={isAnonymous ? "true" : "false"} />
           </div>
 
           {isAnonymous && (
-            <div className="mt-3 flex items-start gap-2 bg-yellow-50 dark:bg-yellow-950/20 text-yellow-800 dark:text-yellow-400 text-xs p-3 rounded-lg border border-yellow-100 dark:border-yellow-900/30">
+            <div className="mt-3 flex items-start gap-2 bg-yellow-50 dark:bg-yellow-950/20 text-yellow-800 dark:text-yellow-400 text-xs p-3 rounded-[4px] border border-yellow-100 dark:border-yellow-900/30">
               <ShieldAlert className="w-4 h-4 shrink-0 mt-0.5" />
               <span>
                 Anonymous filings protect your identity. However, administrators will still see which department the complaint is filed from.
@@ -296,7 +307,7 @@ export function RaiseComplaintForm({ departments }: { departments: Department[] 
         <button
           type="submit"
           disabled={isPending}
-          className="w-full bg-primary text-primary-foreground font-semibold py-3 rounded-xl hover:bg-primary/95 transition-all text-sm shadow-md shadow-primary/10 disabled:opacity-50 cursor-pointer"
+          className="w-full bg-primary text-primary-foreground font-bold py-3 rounded-[4px] hover:opacity-95 transition-all text-xs uppercase tracking-wider disabled:opacity-50 cursor-pointer"
         >
           {isPending ? "Submitting Grievance..." : "File Complaint"}
         </button>

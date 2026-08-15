@@ -50,24 +50,23 @@ export function PollCard({ poll, hasVoted: initialHasVoted, votedOptionId: initi
   };
 
   return (
-    <div className="bg-card text-card-foreground border border-slate-200 dark:border-slate-800 rounded-xl p-5 shadow-sm">
+    <div className="bg-card text-card-foreground border border-slate-200 dark:border-slate-800/80 rounded-[8px] p-5 shadow-none">
       <div className="flex items-center gap-2 mb-3">
-        <BarChart3 className="w-4 h-4 text-primary" />
-        <span className="text-xs font-semibold text-primary uppercase tracking-wider">
-          Campus Poll
+        <span className="text-[9px] font-black text-primary uppercase tracking-widest">
+          Campus Opinion Poll
         </span>
         {!poll.isActive && (
-          <span className="bg-slate-100 dark:bg-slate-800 text-slate-500 text-[10px] px-1.5 py-0.5 rounded font-normal uppercase ml-auto">
+          <span className="bg-slate-100 dark:bg-slate-800 text-slate-500 text-[9px] px-1.5 py-0.5 rounded font-bold uppercase ml-auto">
             Closed
           </span>
         )}
       </div>
 
-      <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 mb-4 leading-snug">
+      <h3 className="text-sm font-serif font-black text-slate-900 dark:text-slate-100 mb-4 leading-tight">
         {poll.question}
       </h3>
 
-      <div className="space-y-2.5">
+      <div className="space-y-3">
         {poll.options.map((option) => {
           const votesCount = option._count.votes + (selectedOptionId === option.id && !initialHasVoted ? 1 : 0);
           const totalCalculated = totalVotes + (!initialHasVoted && hasVoted ? 1 : 0);
@@ -75,31 +74,22 @@ export function PollCard({ poll, hasVoted: initialHasVoted, votedOptionId: initi
           const isUserSelection = selectedOptionId === option.id;
 
           if (hasVoted || !poll.isActive) {
+            // Editorial block progress bar (e.g. YES ██████ 55%)
+            const barBlocks = Math.max(1, Math.round(percent / 8));
             return (
-              <div
-                key={option.id}
-                className={`relative py-2.5 px-4 border rounded-lg overflow-hidden bg-slate-50/50 dark:bg-slate-950/20 transition-all ${
-                  isUserSelection
-                    ? "border-primary/40 bg-primary/5 dark:bg-primary/10"
-                    : "border-slate-100 dark:border-slate-800/80"
-                }`}
-              >
-                {/* Visual Fill Percentage Bar */}
-                <div
-                  className={`absolute left-0 top-0 bottom-0 transition-all duration-500 ease-out ${
-                    isUserSelection ? "bg-primary/10 dark:bg-primary/20" : "bg-slate-200/40 dark:bg-slate-800/40"
-                  }`}
-                  style={{ width: `${percent}%` }}
-                />
-                
-                <div className="relative flex items-center justify-between text-sm">
-                  <span className="font-medium flex items-center gap-2">
-                    {option.text}
-                    {isUserSelection && <Check className="w-4 h-4 text-primary" />}
+              <div key={option.id} className="text-xs space-y-1">
+                <div className="flex justify-between items-baseline font-mono text-[11px]">
+                  <span className="font-bold text-slate-800 dark:text-slate-200">
+                    {option.text} {isUserSelection && <span className="text-[9px] text-teal-600 dark:text-teal-400 font-bold ml-1 uppercase">(Voted)</span>}
                   </span>
-                  <span className="font-bold text-slate-700 dark:text-slate-300">
-                    {percent}% ({votesCount} votes)
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-primary tracking-[1px] font-sans">
+                      {"█".repeat(barBlocks)}
+                    </span>
+                    <span className="font-black text-slate-900 dark:text-white">
+                      {percent}% ({votesCount})
+                    </span>
+                  </div>
                 </div>
               </div>
             );
@@ -111,10 +101,10 @@ export function PollCard({ poll, hasVoted: initialHasVoted, votedOptionId: initi
               key={option.id}
               onClick={() => handleVote(option.id)}
               disabled={isPending}
-              className="w-full text-left py-2.5 px-4 border border-slate-200 dark:border-slate-800 hover:border-primary dark:hover:border-primary/50 hover:bg-slate-50 dark:hover:bg-slate-900/50 rounded-lg text-sm transition-all duration-150 flex items-center justify-between group"
+              className="w-full text-left py-2 px-3 border border-slate-200 dark:border-slate-800 hover:border-primary dark:hover:border-primary/50 hover:bg-slate-50 dark:hover:bg-slate-900/50 rounded-[8px] text-xs transition-all duration-150 flex items-center justify-between group cursor-pointer"
             >
-              <span className="font-medium group-hover:text-primary transition-colors">{option.text}</span>
-              <span className="w-4 h-4 rounded-full border border-slate-300 dark:border-slate-700 group-hover:border-primary flex items-center justify-center shrink-0">
+              <span className="font-bold text-slate-700 dark:text-slate-300 group-hover:text-primary transition-colors">{option.text}</span>
+              <span className="w-3.5 h-3.5 rounded-full border border-slate-350 dark:border-slate-700 group-hover:border-primary flex items-center justify-center shrink-0">
                 <span className="w-1.5 h-1.5 rounded-full bg-transparent group-hover:bg-primary" />
               </span>
             </button>
@@ -122,9 +112,9 @@ export function PollCard({ poll, hasVoted: initialHasVoted, votedOptionId: initi
         })}
       </div>
 
-      {hasVoted && (
-        <p className="text-[10px] text-muted-foreground mt-3 text-right">
-          Total votes: {totalVotes + (!initialHasVoted && hasVoted ? 1 : 0)}
+      {(hasVoted || !poll.isActive) && (
+        <p className="text-[9px] font-mono text-muted-foreground mt-4 text-right">
+          Total Participation: {totalVotes + (!initialHasVoted && hasVoted ? 1 : 0)} students
         </p>
       )}
     </div>

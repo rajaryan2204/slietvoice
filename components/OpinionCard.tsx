@@ -49,47 +49,33 @@ export function OpinionCard({ opinion, currentUserId, hasSupported: initialHasSu
   });
 
   return (
-    <div className="bg-card text-card-foreground border border-slate-200 dark:border-slate-800 rounded-xl p-5 hover:border-slate-300 dark:hover:border-slate-700 transition-all duration-200 flex flex-col md:flex-row gap-4 items-start">
-      {/* Upvote Button Container */}
-      <button
-        onClick={handleSupport}
-        disabled={isPending}
-        className={`flex flex-col items-center justify-center p-2.5 rounded-lg border w-14 transition-all duration-150 shrink-0 ${
-          supported
-            ? "bg-primary/10 border-primary text-primary"
-            : "bg-slate-50 border-slate-200 dark:bg-slate-900 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500"
-        }`}
-      >
-        <ArrowBigUp className={`w-6 h-6 ${supported ? "fill-primary" : ""}`} />
-        <span className="text-xs font-bold mt-1">{supportCount}</span>
-      </button>
-
-      {/* Content */}
-      <div className="flex-1">
-        <div className="flex items-center gap-2 mb-2 flex-wrap">
-          <span className="text-[11px] font-semibold uppercase tracking-wider bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2.5 py-0.5 rounded">
-            {opinion.category}
-          </span>
-          <span className="text-xs text-muted-foreground flex items-center gap-1">
-            <Clock className="w-3.5 h-3.5" />
-            {dateFormatted}
-          </span>
+    <div className="border-b border-border/80 pb-6 pt-4 flex flex-col md:flex-row md:items-start justify-between gap-4">
+      <div className="flex-1 space-y-2">
+        <div className="text-[10px] font-black tracking-widest text-slate-450 dark:text-slate-400 uppercase">
+          {opinion.category} &bull; {opinion.isAnonymous ? "ANONYMOUS" : opinion.author?.name?.toUpperCase() || "STUDENT"}
         </div>
-
-        <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 mb-1">
+        <h3 className="text-base font-serif font-black text-slate-900 dark:text-white leading-tight">
           {opinion.title}
         </h3>
-
-        <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">
+        <p className="text-xs text-slate-650 dark:text-slate-400 leading-relaxed max-w-2xl">
           {opinion.description}
         </p>
-
-        <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-          <User className="w-3.5 h-3.5" />
-          <span>
-            {opinion.isAnonymous ? "Anonymous Student" : opinion.author?.name || "Student"}
-          </span>
+        <div className="text-[10px] font-mono text-muted-foreground pt-1">
+          {supportCount} students supported &bull; Published {dateFormatted}
         </div>
+      </div>
+      <div className="shrink-0 flex items-center">
+        <button
+          onClick={handleSupport}
+          disabled={isPending}
+          className={`px-3 py-1.5 rounded-[4px] border text-[10px] font-bold uppercase tracking-wider transition-all duration-150 cursor-pointer ${
+            supported
+              ? "bg-teal-50 border-teal-200 text-teal-700 dark:bg-teal-950/20 dark:border-teal-800 dark:text-teal-400"
+              : "bg-transparent border-slate-200 hover:border-slate-400 dark:border-slate-800 dark:hover:border-slate-600 text-slate-700 dark:text-slate-300"
+          }`}
+        >
+          {supported ? "✓ Supported" : "Support"}
+        </button>
       </div>
     </div>
   );

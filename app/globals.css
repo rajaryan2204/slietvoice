@@ -1,49 +1,49 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  --background: #FAF9F5;
+  --foreground: #111111;
   --card: #ffffff;
-  --card-foreground: #0f172a;
+  --card-foreground: #111111;
   --popover: #ffffff;
-  --popover-foreground: #0f172a;
-  --primary: #4f46e5;
+  --popover-foreground: #111111;
+  --primary: #0f766e; /* Dark Teal */
   --primary-foreground: #ffffff;
-  --secondary: #f1f5f9;
-  --secondary-foreground: #0f172a;
-  --muted: #f1f5f9;
-  --muted-foreground: #64748b;
-  --accent: #f1f5f9;
-  --accent-foreground: #0f172a;
-  --destructive: #ef4444;
+  --secondary: #f4f3ee;
+  --secondary-foreground: #111111;
+  --muted: #f4f3ee;
+  --muted-foreground: #666666;
+  --accent: #0f766e;
+  --accent-foreground: #ffffff;
+  --destructive: #991b1b;
   --destructive-foreground: #ffffff;
-  --border: #e2e8f0;
-  --input: #e2e8f0;
-  --ring: #4f46e5;
-  --radius: 0.75rem;
+  --border: #e2e1db;
+  --input: #e2e1db;
+  --ring: #0f766e;
+  --radius: 8px; /* Max 8px border radius */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0b0f19;
-    --foreground: #f8fafc;
-    --card: #111827;
-    --card-foreground: #f8fafc;
-    --popover: #111827;
-    --popover-foreground: #f8fafc;
-    --primary: #6366f1;
-    --primary-foreground: #ffffff;
-    --secondary: #1f2937;
-    --secondary-foreground: #f8fafc;
-    --muted: #1f2937;
-    --muted-foreground: #9ca3af;
-    --accent: #1f2937;
-    --accent-foreground: #f8fafc;
+    --background: #121212;
+    --foreground: #f4f3ee;
+    --card: #1c1c1c;
+    --card-foreground: #f4f3ee;
+    --popover: #1c1c1c;
+    --popover-foreground: #f4f3ee;
+    --primary: #0d9488;
+    --primary-foreground: #111111;
+    --secondary: #242424;
+    --secondary-foreground: #f4f3ee;
+    --muted: #242424;
+    --muted-foreground: #a3a3a3;
+    --accent: #0d9488;
+    --accent-foreground: #111111;
     --destructive: #f87171;
     --destructive-foreground: #ffffff;
-    --border: #374151;
-    --input: #374151;
-    --ring: #6366f1;
+    --border: #2e2e2e;
+    --input: #2e2e2e;
+    --ring: #0d9488;
   }
 }
 
@@ -69,6 +69,7 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-sm: calc(var(--radius) - 4px);
   --font-sans: var(--font-geist-sans), Inter, sans-serif;
+  --font-serif: Georgia, Cambria, "Times New Roman", Times, serif;
   --font-mono: var(--font-geist-mono), monospace;
 }
 

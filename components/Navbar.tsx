@@ -34,9 +34,31 @@ export async function Navbar() {
           </Link>
         </div>
 
-        {/* Center menu link */}
-        <div className="flex items-center">
-          <Link href="/about" className="text-sm font-semibold text-slate-600 hover:text-primary dark:text-slate-400 dark:hover:text-white transition-colors">
+        {/* Center menu links */}
+        <div className="hidden md:flex items-center gap-6">
+          {user ? (
+            <>
+              <Link
+                href={user.role === "STUDENT" ? "/student/news" : "/admin/news"}
+                className="text-xs font-bold text-slate-650 dark:text-slate-400 hover:text-primary transition-colors"
+              >
+                News
+              </Link>
+              <Link
+                href={user.role === "STUDENT" ? "/student/voice" : "/admin/voice"}
+                className="text-xs font-bold text-slate-655 dark:text-slate-400 hover:text-primary transition-colors"
+              >
+                Student Voice
+              </Link>
+              <Link
+                href={user.role === "STUDENT" ? "/student/complaints" : "/admin/complaints"}
+                className="text-xs font-bold text-slate-655 dark:text-slate-400 hover:text-primary transition-colors"
+              >
+                Complaints
+              </Link>
+            </>
+          ) : null}
+          <Link href="/about" className="text-xs font-bold text-slate-655 dark:text-slate-400 hover:text-primary transition-colors">
             About Us
           </Link>
         </div>
