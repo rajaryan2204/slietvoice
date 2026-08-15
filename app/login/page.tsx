@@ -3,7 +3,7 @@
 import React, { useActionState } from "react";
 import Link from "next/link";
 import { loginAction } from "@/actions/auth";
-import { GraduationCap, ArrowRight, Sparkles, KeyRound } from "lucide-react";
+import { GraduationCap, ArrowRight } from "lucide-react";
 
 export default function LoginPage() {
   const [state, formAction, isPending] = useActionState(loginAction, null);
@@ -104,24 +104,6 @@ export default function LoginPage() {
               Register
             </Link>
           </p>
-        </div>
-
-        {/* Demo Accounts Panel */}
-        <div className="mt-5 bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800/80 p-3 rounded-[4px]">
-          <div className="flex items-center gap-1.5 text-slate-800 dark:text-slate-200 text-[10px] font-bold uppercase tracking-wider mb-2">
-            <KeyRound className="w-3.5 h-3.5 text-primary" />
-            Quick Demo Accounts:
-          </div>
-          <div className="space-y-1.5 text-[11px] font-mono text-muted-foreground leading-normal">
-            <div>
-              <span className="font-bold text-slate-700 dark:text-slate-300">STUDENT:</span>{" "}
-              <code>student@college.edu</code> / <code>password123</code>
-            </div>
-            <div>
-              <span className="font-bold text-slate-700 dark:text-slate-300">ADMIN:</span>{" "}
-              <code>admin@college.edu</code> / <code>password123</code>
-            </div>
-          </div>
         </div>
       </div>
     </div>
