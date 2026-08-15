@@ -54,91 +54,59 @@ export default async function AdminDashboardPage() {
 
   return (
     <div className="space-y-8">
-      {/* Title */}
-      <div>
-        <h1 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white">
-          Campus Governance Analytics
+      {/* Editorial Title */}
+      <div className="border-b-2 border-foreground dark:border-border pb-6">
+        <h1 className="text-3xl font-serif font-black text-slate-900 dark:text-white uppercase tracking-tight">
+          CAMPUS GOVERNANCE ANALYTICS
         </h1>
-        <p className="text-sm text-muted-foreground mt-1">
-          Review metrics, escalated cases, and overall resolution velocity.
+        <p className="text-xs font-bold uppercase tracking-widest text-slate-500 mt-1">
+          &quot;Review metrics, escalated cases, and overall resolution velocity.&quot;
         </p>
       </div>
 
-      {/* Metrics Cards Grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
-        <div className="bg-card text-card-foreground border border-slate-200 dark:border-slate-800 rounded-xl p-4 flex flex-col justify-between shadow-sm">
-          <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
-            Total Grievances
-          </span>
-          <div className="flex items-center justify-between mt-4">
-            <span className="text-2xl font-black text-slate-900 dark:text-white">
-              {totalCount}
-            </span>
-            <Inbox className="w-5 h-5 text-indigo-500" />
-          </div>
+      {/* Large Editorial Numbers */}
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-6 py-6 border-b border-border text-left">
+        <div>
+          <span className="block text-4xl font-serif font-black">{totalCount}</span>
+          <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Total Grievances</span>
         </div>
-
-        <div className="bg-card text-card-foreground border border-slate-200 dark:border-slate-800 rounded-xl p-4 flex flex-col justify-between shadow-sm">
-          <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
-            Pending Triage
-          </span>
-          <div className="flex items-center justify-between mt-4">
-            <span className="text-2xl font-black text-slate-900 dark:text-white">
-              {pendingCount}
-            </span>
-            <Clock className="w-5 h-5 text-yellow-500" />
-          </div>
+        <div>
+          <span className="block text-4xl font-serif font-black text-amber-700 dark:text-amber-500">{pendingCount}</span>
+          <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Pending Triage</span>
         </div>
-
-        <div className="bg-card text-card-foreground border border-slate-200 dark:border-slate-800 rounded-xl p-4 flex flex-col justify-between shadow-sm">
-          <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
-            Under Review
-          </span>
-          <div className="flex items-center justify-between mt-4">
-            <span className="text-2xl font-black text-slate-900 dark:text-white">
-              {reviewCount}
-            </span>
-            <AlertTriangle className="w-5 h-5 text-blue-500" />
-          </div>
+        <div>
+          <span className="block text-4xl font-serif font-black text-blue-700 dark:text-blue-400">{reviewCount}</span>
+          <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Under Review</span>
         </div>
-
-        <div className="bg-card text-card-foreground border border-slate-200 dark:border-slate-800 rounded-xl p-4 flex flex-col justify-between shadow-sm">
-          <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
-            Resolved Cases
-          </span>
-          <div className="flex items-center justify-between mt-4">
-            <span className="text-2xl font-black text-emerald-600 dark:text-emerald-400">
-              {resolvedCount}
-            </span>
-            <CheckCircle2 className="w-5 h-5 text-emerald-500" />
-          </div>
+        <div>
+          <span className="block text-4xl font-serif font-black text-teal-700 dark:text-teal-400">{resolvedCount}</span>
+          <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Resolved Cases</span>
         </div>
-
-        <div className="bg-card text-card-foreground border border-slate-200 dark:border-slate-800 rounded-xl p-4 flex flex-col justify-between shadow-sm border-rose-100 dark:border-rose-900/30">
-          <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
-            Escalated Issues
-          </span>
-          <div className="flex items-center justify-between mt-4">
-            <span className="text-2xl font-black text-rose-600 dark:text-rose-400">
-              {escalatedCount}
-            </span>
-            <ShieldAlert className="w-5 h-5 text-rose-500 animate-pulse" />
-          </div>
+        <div>
+          <span className="block text-4xl font-serif font-black text-rose-700 dark:text-rose-500">{escalatedCount}</span>
+          <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Escalated Issues</span>
         </div>
       </div>
 
       {/* Resolution rate indicator block */}
-      <div className="bg-card border border-slate-200 dark:border-slate-800 rounded-xl p-6 flex flex-col sm:flex-row items-center gap-6 shadow-sm">
-        <div className="w-20 h-20 rounded-full border-4 border-primary flex items-center justify-center font-black text-lg text-primary bg-primary/5 shrink-0">
-          {avgResolutionRate}%
-        </div>
-        <div>
-          <h2 className="text-base font-bold text-slate-900 dark:text-white">
-            Average Grievance Resolution Rate
-          </h2>
-          <p className="text-sm text-muted-foreground mt-1 max-w-xl leading-relaxed">
-            This represents the percentage of overall submitted grievances that have been fully resolved by moderators, department faculty, or higher administrations.
-          </p>
+      <div className="border border-slate-200 dark:border-slate-800/80 rounded-[8px] p-5 bg-card text-card-foreground">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h2 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">
+              Resolution Velocity
+            </h2>
+            <p className="text-xs text-muted-foreground max-w-xl leading-relaxed">
+              This represents the percentage of overall submitted grievances that have been fully resolved by moderators, department faculty, or higher administrations.
+            </p>
+          </div>
+          <div className="text-right shrink-0">
+            <span className="block text-5xl font-serif font-black text-teal-700 dark:text-teal-400">
+              {avgResolutionRate}%
+            </span>
+            <span className="text-[9px] font-bold uppercase tracking-wider text-muted-foreground block mt-0.5">
+              Average Resolve Rate
+            </span>
+          </div>
         </div>
       </div>
 
