@@ -21,7 +21,7 @@ const signupSchema = z.object({
 });
 
 export async function loginAction(prevState: any, formData: FormData) {
-  const email = formData.get("email") as string;
+  const email = (formData.get("email") as string).trim().toLowerCase();
   const password = formData.get("password") as string;
 
   const result = loginSchema.safeParse({ email, password });
@@ -68,7 +68,7 @@ export async function loginAction(prevState: any, formData: FormData) {
 
 export async function signupAction(prevState: any, formData: FormData) {
   const name = formData.get("name") as string;
-  const email = formData.get("email") as string;
+  const email = (formData.get("email") as string).trim().toLowerCase();
   const password = formData.get("password") as string;
   const studentId = formData.get("studentId") as string;
   const year = formData.get("year");
