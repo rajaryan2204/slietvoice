@@ -34,12 +34,12 @@ export default function LoginPage() {
 
           <div>
             <label className="block text-[10px] font-black uppercase tracking-wider text-slate-500 mb-1.5">
-              Campus Email
+              Email or Registration No.
             </label>
             <input
               name="email"
-              type="email"
-              placeholder="you@college.edu"
+              type="text"
+              placeholder="you@college.edu or 2614244"
               required
               className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900/50 border border-slate-205 dark:border-slate-800 rounded-[4px] text-xs focus:outline-none focus:ring-1 focus:ring-primary transition-colors"
             />

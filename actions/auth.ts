@@ -7,7 +7,7 @@ import { z } from "zod";
 import { redirect } from "next/navigation";
 
 const loginSchema = z.object({
-  email: z.string().email("Invalid email format"),
+  identifier: z.string().min(3, "Email or Registration No. must be at least 3 characters"),
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
@@ -21,24 +21,40 @@ const signupSchema = z.object({
 });
 
 export async function loginAction(prevState: any, formData: FormData) {
-  const email = (formData.get("email") as string).trim().toLowerCase();
+  const identifier = (formData.get("email") as string).trim();
   const password = formData.get("password") as string;
 
-  const result = loginSchema.safeParse({ email, password });
+  const result = loginSchema.safeParse({ identifier, password });
   if (!result.success) {
     return { error: result.error.issues[0].message };
   }
 
   let targetUrl = "";
   try {
-    const user = await db.user.findUnique({ where: { email } });
+    let user = null;
+
+    // Detect if numeric (Registration No.) or email
+    if (/^\d+$/.test(identifier)) {
+      const profile = await db.studentProfile.findUnique({
+        where: { studentId: identifier },
+        include: { user: true },
+      });
+      if (profile) {
+        user = profile.user;
+      }
+    } else {
+      user = await db.user.findUnique({
+        where: { email: identifier.toLowerCase() },
+      });
+    }
+
     if (!user) {
-      return { error: "Invalid email or password" };
+      return { error: "Invalid email, registration number, or password" };
     }
 
     const isValid = await verifyPassword(password, user.passwordHash);
     if (!isValid) {
-      return { error: "Invalid email or password" };
+      return { error: "Invalid email, registration number, or password" };
     }
 
     const token = await signToken({
