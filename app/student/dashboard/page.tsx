@@ -53,6 +53,12 @@ export default async function StudentDashboard() {
     include: { author: true },
   });
 
+  // 3b. Fetch latest 4 notices for the Campus Today board
+  const campusNotices = await db.news.findMany({
+    take: 4,
+    orderBy: { createdAt: "desc" },
+  });
+
   // 4. Fetch notifications
   const notifications = await db.notification.findMany({
     where: { userId: user.id },
@@ -166,22 +172,18 @@ export default async function StudentDashboard() {
           Campus Today
         </h2>
         <div className="space-y-3.5 text-xs leading-relaxed">
-          <div className="flex flex-col md:flex-row md:items-baseline gap-2">
-            <span className="font-bold uppercase tracking-wider text-teal-700 dark:text-teal-400 min-w-[120px] block">ACADEMICS</span>
-            <span className="text-slate-750 dark:text-slate-350">Mid-semester examinations review schedules are now live on the portal.</span>
-          </div>
-          <div className="flex flex-col md:flex-row md:items-baseline gap-2 pt-2.5 border-t border-dashed border-border">
-            <span className="font-bold uppercase tracking-wider text-teal-700 dark:text-teal-400 min-w-[120px] block">HOSTEL</span>
-            <span className="text-slate-750 dark:text-slate-350">Routine maintenance and solar water purifier system repairs scheduled for next Sunday.</span>
-          </div>
-          <div className="flex flex-col md:flex-row md:items-baseline gap-2 pt-2.5 border-t border-dashed border-border">
-            <span className="font-bold uppercase tracking-wider text-teal-700 dark:text-teal-400 min-w-[120px] block">EVENTS</span>
-            <span className="text-slate-755 dark:text-slate-355">Inter-hostel volleyball and cricket tournament registration is open at PG Block ground.</span>
-          </div>
-          <div className="flex flex-col md:flex-row md:items-baseline gap-2 pt-2.5 border-t border-dashed border-border">
-            <span className="font-bold uppercase tracking-wider text-teal-700 dark:text-teal-400 min-w-[120px] block">ADMINISTRATION</span>
-            <span className="text-slate-750 dark:text-slate-350">New campus wifi access guidelines issued for all student hostels.</span>
-          </div>
+          {campusNotices.length > 0 ? (
+            campusNotices.map((notice, idx) => (
+              <div key={notice.id} className={`flex flex-col md:flex-row md:items-baseline gap-2 ${idx > 0 ? "pt-2.5 border-t border-dashed border-border" : ""}`}>
+                <span className="font-bold uppercase tracking-wider text-teal-700 dark:text-teal-400 min-w-[120px] block">{notice.category}</span>
+                <span className="text-slate-750 dark:text-slate-350">{notice.title}: {notice.content.slice(0, 150)}{notice.content.length > 150 ? "..." : ""}</span>
+              </div>
+            ))
+          ) : (
+            <div className="text-muted-foreground text-xs italic">
+              No active campus announcements posted today.
+            </div>
+          )}
         </div>
       </div>
 
