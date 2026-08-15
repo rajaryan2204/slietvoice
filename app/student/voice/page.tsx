@@ -47,7 +47,7 @@ export default async function StudentVoicePage() {
           STUDENT VOICE
         </h1>
         <p className="text-xs font-bold uppercase tracking-widest text-slate-500 mt-1">
-          "What students are talking about."
+          &quot;What students are talking about.&quot;
         </p>
       </div>
 

@@ -105,7 +105,7 @@ export function RaiseComplaintForm({ departments }: { departments: Department[] 
           RAISE A CONCERN
         </h1>
         <p className="text-xs font-bold uppercase tracking-widest text-slate-500 mt-1">
-          "Tell us what is happening. We'll make sure it reaches the right people."
+          &quot;Tell us what is happening. We&apos;ll make sure it reaches the right people.&quot;
         </p>
       </div>
 
