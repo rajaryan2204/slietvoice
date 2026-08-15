@@ -43,7 +43,7 @@ export function SignUpForm({ departments }: { departments: Department[] }) {
             type="text"
             placeholder="John Doe"
             required
-            className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900/50 border border-slate-205 dark:border-slate-800 rounded-[4px] text-xs focus:outline-none focus:ring-1 focus:ring-primary transition-all"
+            className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900/50 border border-slate-205 dark:border-slate-800 rounded-[4px] text-xs focus:outline-none focus:ring-1 focus:ring-primary transition-colors"
           />
         </div>
 
@@ -59,7 +59,7 @@ export function SignUpForm({ departments }: { departments: Department[] }) {
               inputMode="numeric"
               placeholder="e.g. 2614244"
               required
-              className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900/50 border border-slate-205 dark:border-slate-800 rounded-[4px] text-xs focus:outline-none focus:ring-1 focus:ring-primary transition-all"
+              className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900/50 border border-slate-205 dark:border-slate-800 rounded-[4px] text-xs focus:outline-none focus:ring-1 focus:ring-primary transition-colors"
             />
           </div>
           <div>
@@ -69,7 +69,7 @@ export function SignUpForm({ departments }: { departments: Department[] }) {
             <select
               name="year"
               required
-              className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900/50 border border-slate-205 dark:border-slate-800 rounded-[4px] text-xs focus:outline-none focus:ring-1 focus:ring-primary transition-all"
+              className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900/50 border border-slate-205 dark:border-slate-800 rounded-[4px] text-xs focus:outline-none focus:ring-1 focus:ring-primary transition-colors"
             >
               <option value="1">1st Year</option>
               <option value="2">2nd Year</option>
@@ -87,7 +87,7 @@ export function SignUpForm({ departments }: { departments: Department[] }) {
           <select
             name="departmentId"
             required
-            className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900/50 border border-slate-205 dark:border-slate-800 rounded-[4px] text-xs focus:outline-none focus:ring-1 focus:ring-primary transition-all"
+            className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900/50 border border-slate-205 dark:border-slate-800 rounded-[4px] text-xs focus:outline-none focus:ring-1 focus:ring-primary transition-colors"
           >
             <option value="">Select Department</option>
             {departments.map((dept) => (
@@ -107,7 +107,7 @@ export function SignUpForm({ departments }: { departments: Department[] }) {
             type="email"
             placeholder="johndoe@college.edu"
             required
-            className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900/50 border border-slate-205 dark:border-slate-800 rounded-[4px] text-xs focus:outline-none focus:ring-1 focus:ring-primary transition-all"
+            className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900/50 border border-slate-205 dark:border-slate-800 rounded-[4px] text-xs focus:outline-none focus:ring-1 focus:ring-primary transition-colors"
           />
         </div>
 
@@ -120,7 +120,7 @@ export function SignUpForm({ departments }: { departments: Department[] }) {
             type="password"
             placeholder="••••••••"
             required
-            className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900/50 border border-slate-205 dark:border-slate-800 rounded-[4px] text-xs focus:outline-none focus:ring-1 focus:ring-primary transition-all"
+            className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900/50 border border-slate-205 dark:border-slate-800 rounded-[4px] text-xs focus:outline-none focus:ring-1 focus:ring-primary transition-colors"
           />
         </div>
 

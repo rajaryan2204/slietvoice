@@ -138,7 +138,7 @@ export function RaiseComplaintForm({ departments }: { departments: Department[] 
             type="text"
             placeholder="e.g. South Mess food hygiene issues during dinner"
             required
-            className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-205 dark:border-slate-800 rounded-[4px] text-xs focus:outline-none focus:ring-1 focus:ring-primary transition-all"
+            className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-205 dark:border-slate-800 rounded-[4px] text-xs focus:outline-none focus:ring-1 focus:ring-primary transition-colors"
           />
         </div>
 
@@ -150,7 +150,7 @@ export function RaiseComplaintForm({ departments }: { departments: Department[] 
             <select
               name="category"
               required
-              className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-205 dark:border-slate-800 rounded-[4px] text-xs focus:outline-none focus:ring-1 focus:ring-primary transition-all"
+              className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-205 dark:border-slate-800 rounded-[4px] text-xs focus:outline-none focus:ring-1 focus:ring-primary transition-colors"
             >
               <option value="Academics">Academics</option>
               <option value="Hostel">Hostel</option>
@@ -173,7 +173,7 @@ export function RaiseComplaintForm({ departments }: { departments: Department[] 
             <select
               name="departmentId"
               required
-              className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-205 dark:border-slate-800 rounded-[4px] text-xs focus:outline-none focus:ring-1 focus:ring-primary transition-all"
+              className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-205 dark:border-slate-800 rounded-[4px] text-xs focus:outline-none focus:ring-1 focus:ring-primary transition-colors"
             >
               <option value="">Select Department</option>
               {departments.map((dept) => (
@@ -193,7 +193,7 @@ export function RaiseComplaintForm({ departments }: { departments: Department[] 
             <select
               name="priority"
               required
-              className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-205 dark:border-slate-800 rounded-[4px] text-xs focus:outline-none focus:ring-1 focus:ring-primary transition-all"
+              className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-205 dark:border-slate-800 rounded-[4px] text-xs focus:outline-none focus:ring-1 focus:ring-primary transition-colors"
             >
               <option value="LOW">Low - General Feedback</option>
               <option value="MEDIUM">Medium - Performance/Utility degradation</option>
@@ -269,7 +269,7 @@ export function RaiseComplaintForm({ departments }: { departments: Department[] 
             rows={5}
             required
             placeholder="Provide a detailed description of the problem, including specific block numbers, room details, dates, and impact on students..."
-            className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-205 dark:border-slate-800 rounded-[4px] text-xs focus:outline-none focus:ring-1 focus:ring-primary transition-all"
+            className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-205 dark:border-slate-800 rounded-[4px] text-xs focus:outline-none focus:ring-1 focus:ring-primary transition-colors"
           />
         </div>
 

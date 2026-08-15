@@ -41,7 +41,7 @@ export default function LoginPage() {
               type="email"
               placeholder="you@college.edu"
               required
-              className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900/50 border border-slate-205 dark:border-slate-800 rounded-[4px] text-xs focus:outline-none focus:ring-1 focus:ring-primary transition-all"
+              className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900/50 border border-slate-205 dark:border-slate-800 rounded-[4px] text-xs focus:outline-none focus:ring-1 focus:ring-primary transition-colors"
             />
           </div>
 
@@ -56,7 +56,7 @@ export default function LoginPage() {
               type="password"
               placeholder="••••••••"
               required
-              className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900/50 border border-slate-205 dark:border-slate-800 rounded-[4px] text-xs focus:outline-none focus:ring-1 focus:ring-primary transition-all"
+              className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900/50 border border-slate-205 dark:border-slate-800 rounded-[4px] text-xs focus:outline-none focus:ring-1 focus:ring-primary transition-colors"
             />
           </div>
 
