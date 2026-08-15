@@ -26,10 +26,10 @@ export default async function LandingPage() {
   });
 
   const mockStats = {
-    students: totalStudents > 0 ? totalStudents : 1240,
-    issues: totalComplaints > 0 ? totalComplaints : 158,
-    resolved: resolvedComplaints > 0 ? resolvedComplaints : 142,
-    announcements: activeAnnouncements > 0 ? activeAnnouncements : 12,
+    students: totalStudents,
+    issues: totalComplaints,
+    resolved: resolvedComplaints,
+    announcements: activeAnnouncements,
   };
 
   return (
