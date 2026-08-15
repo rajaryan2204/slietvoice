@@ -2,14 +2,7 @@ import React from "react";
 import { db } from "@/lib/db";
 import { getSessionUser } from "@/lib/auth";
 import { AdminCharts } from "@/components/AdminCharts";
-import {
-  Inbox,
-  AlertTriangle,
-  CheckCircle2,
-  TrendingUp,
-  Clock,
-  ShieldAlert,
-} from "lucide-react";
+
 
 export const revalidate = 0; // Dynamic rendering
 

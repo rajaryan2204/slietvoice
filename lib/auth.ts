@@ -20,7 +20,7 @@ export async function signToken(payload: { id: string; email: string; role: stri
 export async function verifyToken(token: string): Promise<unknown> {
   try {
     return jwt.verify(token, JWT_SECRET);
-  } catch (error) {
+  } catch {
     return null;
   }
 }
@@ -41,7 +41,7 @@ export async function getSessionUser() {
       },
     });
     return user;
-  } catch (error) {
+  } catch {
     return null;
   }
 }

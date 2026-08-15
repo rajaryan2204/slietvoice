@@ -6,17 +6,7 @@ import { ComplaintCard } from "@/components/ComplaintCard";
 import { NewsCard } from "@/components/NewsCard";
 import { PollCard } from "@/components/PollCard";
 import { EmptyState } from "@/components/EmptyState";
-import {
-  MessageSquarePlus,
-  Compass,
-  Newspaper,
-  Bell,
-  CheckCircle2,
-  AlertCircle,
-  HelpCircle,
-  TrendingUp,
-  Clock,
-} from "lucide-react";
+import { TrendingUp } from "lucide-react";
 
 export const revalidate = 0; // Dynamic rendering
 
@@ -26,9 +16,6 @@ export default async function StudentDashboard() {
 
   // 1. Fetch live metrics
   const totalComplaints = await db.complaint.count({ where: { studentId: user.id } });
-  const pendingCount = await db.complaint.count({
-    where: { studentId: user.id, status: { in: ["SUBMITTED", "UNDER_REVIEW", "ASSIGNED"] } },
-  });
   const resolvedCount = await db.complaint.count({
     where: { studentId: user.id, status: "RESOLVED" },
   });

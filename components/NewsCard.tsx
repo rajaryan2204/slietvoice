@@ -1,5 +1,5 @@
 import React from "react";
-import { BadgeCheck, Calendar, ArrowUpRight } from "lucide-react";
+import { BadgeCheck } from "lucide-react";
 
 interface NewsCardProps {
   news: {
@@ -23,24 +23,6 @@ export function NewsCard({ news }: NewsCardProps) {
     month: "short",
     day: "numeric",
   });
-
-  // Category specific gradients for placeholders
-  const getCategoryGradient = (cat: string) => {
-    switch (cat.toUpperCase()) {
-      case "EMERGENCY":
-        return "from-red-500 to-rose-600";
-      case "ACADEMICS":
-        return "from-indigo-500 to-blue-600";
-      case "EXAMINATION":
-        return "from-amber-500 to-orange-600";
-      case "HOSTEL":
-        return "from-teal-500 to-emerald-600";
-      case "MESS":
-        return "from-violet-500 to-purple-600";
-      default:
-        return "from-slate-500 to-slate-700";
-    }
-  };
 
   return (
     <div className="bg-card text-card-foreground border border-slate-200 dark:border-slate-800/80 rounded-[8px] overflow-hidden hover:border-slate-400 dark:hover:border-slate-600 transition-all duration-200 flex flex-col justify-between group shadow-none">

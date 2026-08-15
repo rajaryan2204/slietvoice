@@ -3,7 +3,7 @@ import { db } from "@/lib/db";
 import { getSessionUser } from "@/lib/auth";
 import { StatusBadge } from "@/components/StatusBadge";
 import { PriorityBadge } from "@/components/PriorityBadge";
-import { EmptyState } from "@/components/EmptyState";
+
 import Link from "next/link";
 import { User, Mail, GraduationCap, Building, FileSpreadsheet, MessageCircle } from "lucide-react";
 

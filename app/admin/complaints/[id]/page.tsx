@@ -18,8 +18,6 @@ import {
   FileText,
   ArrowLeft,
   User,
-  ShieldCheck,
-  UserCheck,
   AlertOctagon,
   Wrench,
 } from "lucide-react";

@@ -5,7 +5,7 @@ import { StatusBadge } from "@/components/StatusBadge";
 import { PriorityBadge } from "@/components/PriorityBadge";
 import { EmptyState } from "@/components/EmptyState";
 import Link from "next/link";
-import { Eye, ArrowUpDown, ChevronRight } from "lucide-react";
+import { Eye } from "lucide-react";
 
 interface SearchParams {
   status?: string;

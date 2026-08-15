@@ -3,9 +3,8 @@ import React from "react";
 import Link from "next/link";
 import { getSessionUser } from "@/lib/auth";
 import { logoutAction } from "@/actions/auth";
-import { markNotificationsAsReadAction } from "@/actions/notifications";
 import { db } from "@/lib/db";
-import { Bell, LogOut, User, GraduationCap, ShieldAlert } from "lucide-react";
+import { Bell, LogOut, GraduationCap } from "lucide-react";
 
 export async function Navbar() {
   const user = await getSessionUser();

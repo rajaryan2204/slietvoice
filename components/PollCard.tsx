@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useTransition } from "react";
-import { BarChart3, Check } from "lucide-react";
+
 import { votePollAction } from "@/actions/polls";
 
 interface Option {

@@ -3,7 +3,7 @@ import { db } from "@/lib/db";
 import { getSessionUser } from "@/lib/auth";
 import { createPollAction, togglePollStatusAction } from "@/actions/polls";
 import { EmptyState } from "@/components/EmptyState";
-import { BarChart3, MessageSquarePlus, Trash2, Power, Eye } from "lucide-react";
+import { BarChart3, MessageSquarePlus, Trash2, Power } from "lucide-react";
 import { revalidatePath } from "next/cache";
 
 export const revalidate = 0; // Dynamic rendering

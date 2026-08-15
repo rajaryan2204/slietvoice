@@ -1,7 +1,7 @@
 import React from "react";
 import { db } from "@/lib/db";
 import { getSessionUser } from "@/lib/auth";
-import { Users, GraduationCap, ShieldCheck, Mail } from "lucide-react";
+import { GraduationCap, ShieldCheck, Mail } from "lucide-react";
 
 export const revalidate = 0; // Dynamic rendering
 

@@ -2,7 +2,7 @@
 
 import React, { useActionState, useState } from "react";
 import { raiseComplaintAction } from "@/actions/complaints";
-import { MessageSquarePlus, Info, CheckCircle2, ShieldAlert } from "lucide-react";
+import { CheckCircle2, ShieldAlert } from "lucide-react";
 import Link from "next/link";
 
 interface Department {

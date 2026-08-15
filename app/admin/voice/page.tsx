@@ -2,7 +2,7 @@ import React from "react";
 import { db } from "@/lib/db";
 import { getSessionUser } from "@/lib/auth";
 import { EmptyState } from "@/components/EmptyState";
-import { Megaphone, MessageSquarePlus, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { revalidatePath } from "next/cache";
 
 export const revalidate = 0; // Dynamic rendering

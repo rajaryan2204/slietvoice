@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useTransition } from "react";
-import { ArrowBigUp, Award, User, Clock } from "lucide-react";
 import { supportOpinionAction } from "@/actions/opinions";
 
 interface OpinionCardProps {
@@ -17,11 +16,10 @@ interface OpinionCardProps {
       supports: number;
     };
   };
-  currentUserId: string;
   hasSupported: boolean;
 }
 
-export function OpinionCard({ opinion, currentUserId, hasSupported: initialHasSupported }: OpinionCardProps) {
+export function OpinionCard({ opinion, hasSupported: initialHasSupported }: OpinionCardProps) {
   const [supported, setSupported] = useState(initialHasSupported);
   const [supportCount, setSupportCount] = useState(opinion._count.supports);
   const [isPending, startTransition] = useTransition();

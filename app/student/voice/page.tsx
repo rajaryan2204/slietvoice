@@ -4,8 +4,7 @@ import { getSessionUser } from "@/lib/auth";
 import { OpinionCard } from "@/components/OpinionCard";
 import { EmptyState } from "@/components/EmptyState";
 import { createOpinionAction } from "@/actions/opinions";
-import { Megaphone, MessageSquarePlus, Globe, Sparkles } from "lucide-react";
-import { revalidatePath } from "next/cache";
+import { Megaphone } from "lucide-react";
 
 export const revalidate = 0; // Dynamic rendering
 
@@ -139,7 +138,6 @@ export default async function StudentVoicePage() {
                 <OpinionCard
                   key={op.id}
                   opinion={op}
-                  currentUserId={user.id}
                   hasSupported={supportedOpinionIds.has(op.id)}
                 />
               ))}

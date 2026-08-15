@@ -3,12 +3,9 @@ import Link from "next/link";
 import { db } from "@/lib/db";
 import { Navbar } from "@/components/Navbar";
 import {
-  GraduationCap,
   MessageSquarePlus,
-  Compass,
   ArrowRight,
   ShieldCheck,
-  TrendingUp,
   Clock,
   Sparkles,
 } from "lucide-react";
