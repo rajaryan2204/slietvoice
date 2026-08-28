@@ -37,9 +37,10 @@ export async function GET() {
       email: user.email,
       role: user.role,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Failed to initialize admin";
     return NextResponse.json(
-      { success: false, error: error.message || "Failed to initialize admin" },
+      { success: false, error: message },
       { status: 500 }
     );
   }
