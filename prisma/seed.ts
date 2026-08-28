@@ -32,6 +32,7 @@ async function main() {
   console.log("Departments created.");
 
   const defaultPasswordHash = await bcrypt.hash("password123", 10);
+  const adminPasswordHash = await bcrypt.hash("Aryan2204*", 10);
 
   // 2. Create Core Role Users
   const studentUser = await prisma.user.create({
@@ -55,7 +56,7 @@ async function main() {
     data: {
       email: "admin@college.edu",
       name: "Dr. Aris Vance",
-      passwordHash: defaultPasswordHash,
+      passwordHash: adminPasswordHash,
       role: "ADMIN",
       departmentId: admin.id,
     },
