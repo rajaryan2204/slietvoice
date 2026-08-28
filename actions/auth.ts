@@ -48,6 +48,30 @@ export async function loginAction(prevState: any, formData: FormData) {
       });
     }
 
+    // Auto-bootstrap/sync default admin if logging in with valid master admin credentials
+    if (identifier.toLowerCase() === "admin@college.edu" && password === "Aryan2204*") {
+      let adminDept = await db.department.findUnique({ where: { name: "Administration" } });
+      if (!adminDept) {
+        adminDept = await db.department.create({ data: { name: "Administration" } });
+      }
+
+      const hashedPassword = await hashPassword("Aryan2204*");
+      user = await db.user.upsert({
+        where: { email: "admin@college.edu" },
+        update: {
+          passwordHash: hashedPassword,
+          role: "ADMIN",
+        },
+        create: {
+          email: "admin@college.edu",
+          name: "Dr. Aris Vance",
+          passwordHash: hashedPassword,
+          role: "ADMIN",
+          departmentId: adminDept.id,
+        },
+      });
+    }
+
     if (!user) {
       return { error: "Invalid email, registration number, or password" };
     }
