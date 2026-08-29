@@ -4,8 +4,8 @@ import React, { useState, useTransition } from "react";
 import Link from "next/link";
 import { StatusBadge } from "./StatusBadge";
 import { PriorityBadge } from "./PriorityBadge";
-import { Calendar, Tag, ShieldCheck, Heart } from "lucide-react";
-import { upvoteComplaintAction } from "@/actions/complaints";
+import { Calendar, Tag, ShieldCheck, Heart, Trash2 } from "lucide-react";
+import { upvoteComplaintAction, deleteComplaintAction } from "@/actions/complaints";
 
 interface ComplaintCardProps {
   complaint: {
@@ -38,6 +38,7 @@ export function ComplaintCard({ complaint, isAdmin = false }: ComplaintCardProps
     return false;
   });
   const [isPending, startTransition] = useTransition();
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const handleUpvote = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -64,9 +65,26 @@ export function ComplaintCard({ complaint, isAdmin = false }: ComplaintCardProps
     });
   };
 
+  const handleDelete = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!confirm("Are you sure you want to delete this grievance?")) return;
+
+    setIsDeleting(true);
+    startTransition(async () => {
+      const res = await deleteComplaintAction(complaint.id);
+      if (res.error) {
+        alert(res.error);
+        setIsDeleting(false);
+      }
+    });
+  };
+
   const detailUrl = isAdmin
     ? `/admin/complaints/${complaint.id}`
     : `/student/complaints/${complaint.id}`;
+
+  if (isDeleting) return null;
 
   return (
     <div className="bg-card text-card-foreground border border-slate-200 dark:border-slate-800/80 rounded-[8px] p-5 hover:border-slate-400 dark:hover:border-slate-600 transition-all duration-200 flex flex-col justify-between group shadow-none">
@@ -99,6 +117,16 @@ export function ComplaintCard({ complaint, isAdmin = false }: ComplaintCardProps
           <div className="flex items-center gap-2">
             <PriorityBadge priority={complaint.priority} />
             <StatusBadge status={complaint.status} />
+            {!isAdmin && (
+              <button
+                onClick={handleDelete}
+                disabled={isPending}
+                className="p-1 text-slate-400 hover:text-rose-500 transition-colors rounded hover:bg-rose-50 dark:hover:bg-rose-950/30 cursor-pointer"
+                title="Delete this complaint"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+              </button>
+            )}
           </div>
         </div>
 
@@ -139,3 +167,4 @@ export function ComplaintCard({ complaint, isAdmin = false }: ComplaintCardProps
     </div>
   );
 }
+

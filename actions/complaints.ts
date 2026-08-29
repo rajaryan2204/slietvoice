@@ -335,3 +335,42 @@ export async function upvoteComplaintAction(complaintId: string, increment: bool
     return { error: error.message || "Failed to support complaint" };
   }
 }
+
+export async function deleteComplaintAction(complaintId: string) {
+  const user = await getSessionUser();
+  if (!user) {
+    return { error: "Unauthorized access" };
+  }
+
+  try {
+    const complaint = await db.complaint.findUnique({
+      where: { id: complaintId },
+    });
+
+    if (!complaint) {
+      return { error: "Complaint not found" };
+    }
+
+    if (complaint.studentId !== user.id && user.role !== "ADMIN" && user.role !== "MODERATOR") {
+      return { error: "You can only delete your own complaints" };
+    }
+
+    // Delete cascading references
+    await db.complaintUpdate.deleteMany({ where: { complaintId } });
+    await db.complaintEvidence.deleteMany({ where: { complaintId } });
+    await db.escalation.deleteMany({ where: { complaintId } });
+
+    await db.complaint.delete({
+      where: { id: complaintId },
+    });
+
+    revalidatePath("/student/complaints");
+    revalidatePath("/student/dashboard");
+    revalidatePath("/admin/complaints");
+    revalidatePath("/");
+    return { success: true };
+  } catch (error: any) {
+    return { error: error.message || "Failed to delete complaint" };
+  }
+}
+
