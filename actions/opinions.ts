@@ -86,3 +86,35 @@ export async function supportOpinionAction(opinionId: string) {
     return { error: error.message || "Failed to update support status" };
   }
 }
+
+export async function deleteOpinionAction(opinionId: string) {
+  const user = await getSessionUser();
+  if (!user) {
+    return { error: "Unauthorized access" };
+  }
+
+  try {
+    const opinion = await db.opinion.findUnique({
+      where: { id: opinionId },
+    });
+
+    if (!opinion) {
+      return { error: "Suggestion not found" };
+    }
+
+    if (opinion.authorId && opinion.authorId !== user.id && user.role !== "ADMIN" && user.role !== "MODERATOR") {
+      return { error: "You can only delete your own suggestions" };
+    }
+
+    // Delete all supports and then the opinion
+    await db.opinionSupport.deleteMany({ where: { opinionId } });
+    await db.opinion.delete({ where: { id: opinionId } });
+
+    revalidatePath("/student/voice");
+    revalidatePath("/admin/voice");
+    return { success: true };
+  } catch (error: any) {
+    return { error: error.message || "Failed to delete suggestion" };
+  }
+}
+
